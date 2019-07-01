@@ -1,0 +1,41 @@
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.hidden {
+  display: none;
+}
+
+.topbar-bot {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 40px;
+}
+
+.flex-topbar {
+  width: 65%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.flex-topbar .navbar-text {
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.event {
+  margin: 0 auto;
+}
+
+/* Ensures event's content doesn't overflow */
+.modal-body * {
+  max-width: 100%;
+}

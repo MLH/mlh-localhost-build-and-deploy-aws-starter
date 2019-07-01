@@ -1,0 +1,22 @@
+{
+  "install": "pip3 install --user -r requirements.txt",
+  "start": "PYTHONUNBUFFERED=true python3 main.py FLASK_DEBUG=1 flask run",
+  "watch": {
+    "ignore": [
+      "\\.pyc$"
+    ],
+    "install": {
+      "include": [
+        "^requirements\\.txt$",
+        "^\\.env$"
+      ]
+    },
+    "restart": {
+      "include": [
+        "\\.py$",
+        "^start\\.sh"
+      ]
+    },
+    "throttle": 1000
+  }
+}
