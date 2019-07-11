@@ -1,6 +1,5 @@
-# Bot chat
+# Localhost AWS
 
-This application demonstrates the use of Markov Chains [theory](https://en.wikipedia.org/wiki/Markov_chain) by building a chat-bot based on tweets.
 
 ## Requirements and dependencies
 
