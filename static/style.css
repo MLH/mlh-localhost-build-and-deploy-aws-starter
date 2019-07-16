@@ -39,3 +39,46 @@ body {
 .modal-body * {
   max-width: 100%;
 }
+
+.card-img-top.placeholder {
+  display: block;
+  margin: 0 auto;
+  max-width: 150px;
+}
+
+.icon-favorite {
+  width: 16px;
+  transition: all 1s;
+}
+
+#subscribedButtonContent {
+  display: flex;
+}
+
+#subscribedButtonContent.favorited {
+  color: #dc3545;
+}
+
+.favorited .icon-favorite {
+  font-weight: bold;
+  filter: invert(16%) sepia(67%) saturate(5946%) hue-rotate(341deg)
+    brightness(88%) contrast(94%);
+  transition: all 1s;
+}
+
+.pulse {
+  animation: pulse 0.8s infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
