@@ -12,7 +12,7 @@
 Use the command below:
 
 ```sh
-git clone https://github.com/MLH/localhost-python-ii.git
+git clone https://github.com/MLH/mlh-localhost-build-and-deploy-aws.git
 ```
 
 ## Set Up Environment variables
