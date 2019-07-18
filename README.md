@@ -28,20 +28,18 @@ After going through the tutorial, you should have the following information:
 EVENTBRITE_AUTH_TOKEN=
 ```
 
-### Postgres Database URL
+### Database URL
 
-For this example app, we will be using a Postgresql database. We need to specify Postgre's database url in the config. Follow [this guide](https://aws.amazon.com/getting-started/tutorials/create-connect-postgresql-db) to get your database set up.
-
-After going through the tutorial, you should have the following information:
+This allows you to use a custom database url and will be useful for local tests (The app is currently configured to support a custom Postgres or Mysql database). This won't be necessary to deploy the app to AWS, as we will use an RDS instance that Elast Beanstalk configures for us. See the "Adding a database to Your Elastic Beanstalk Environment" section below for more details.
 
 ```
-DATABASE_URL=
+CUSTOM_DATABASE_URL=
 ```
 
 The format should be something like:
 
 ```
-DATABASE_URL=postgresql://USER:PASSWORD@ENDPOINT/DATABASE_NAME
+CUSTOM_DATABASE_URL=mysql://USER:PASSWORD@ENDPOINT/DATABASE_NAME
 ```
 
 ## Install dependencies
@@ -61,3 +59,100 @@ FLASK_APP=application.py FLASK_DEBUG=1 flask run
 ```
 
 Then open [http://localhost:5000/](http://localhost:5000/) to see the application.
+
+## Deploying to AWS Elastic Beanstalk
+
+We will use [awswebcli](https://pypi.org/project/awsebcli/3.7.4/) to deployr our app to AWS.
+
+### Install awswebcli
+
+```sh
+pip install awsebcli
+```
+
+### Initialize your APP
+
+After installing `awswebcli`, the first thing we need to do is to initialize our app within AWS.
+
+```sh
+eb init
+```
+
+This will prompt you with a number of questions to help you configure your environment.
+
+#### Do you wish to continue with CodeCommit?
+
+Select No (N)
+
+#### Default region
+
+As this is an example application, we can choose keep the default option selected.
+
+#### Credentials
+
+Next, it’s going to ask for your AWS credentials.
+
+If needed, you can follow this guide to set up your [IAM account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)
+
+#### Application name
+
+This will default to the directory name. Just go with that.
+
+#### Python version
+
+Choose any Python 3+ version
+
+#### SSH
+
+Say yes to setting up SSH for your instances.
+
+#### RSA Keypair
+
+Next, you need to generate an RSA keypair, which will be added to your ~/.ssh folder. This keypair will also be uploaded to the EC2 public key for the region you specified in step one. This will allow you to SSH into your EC2 instance later in this tutorial.
+
+### Adding a database to Your Elastic Beanstalk Environment
+
+Open your console management by running
+
+```sh
+eb console
+```
+
+Then follow [this guide](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.db.html) to set up your Amazon RDS within your app. The app expects an RDS MySQL database.
+
+### Create an environment
+
+```sh
+eb create
+```
+
+Just like eb init, this command will prompt you with a series of questions.
+
+#### Environment Name
+
+Name your environment. `localhost-aws-test` for instance.
+
+#### DNS CNAME prefix
+
+This will be your subdomain. You can keep the default value, or use your environment name.
+
+### Configuring Eventbrite Auth Token
+
+Open your console management by running
+
+```sh
+eb setenv EVENTBRITE_AUTH_TOKEN={{EVENTBRITE_AUTH_TOKEN_VALUE}}
+```
+
+### (Optional) Set up a different DB engine
+
+```sh
+eb setenv RDS_ENGINE=postgresql
+eb setenv RDS_ENGINE=mysql
+```
+
+### Deploy the app
+
+```sh
+eb deploy
+```
