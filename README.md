@@ -156,3 +156,11 @@ eb setenv RDS_ENGINE=mysql
 ```sh
 eb deploy
 ```
+
+### Open your app
+
+To see your deployed app in the browser:
+
+```sh
+eb open
+```
