@@ -1,6 +1,5 @@
 # Localhost AWS
 
-
 ## Requirements and dependencies
 
 - [Python3](https://www.python.org/) - We recommend using virtual environments. They will help on the creation of isolated environments so different python versions can run on the same machine. Check more about virtual environments [here](https://docs.python.org/3/library/venv.html). (Needs to be installed manually)
@@ -21,12 +20,28 @@ To quickly set up environment variables, make a copy of the `.env.example` and r
 
 ### EventBrite API Key
 
-We need to setup the an Eventbrite Auth token to be able to fetch data from Eventbrite's API. Follow [this guide](https://www.eventbrite.com/platform/api#/introduction/authentication) to get your key. The **Personal Tokens** section is the relevant bit.
+We need to setup an Eventbrite Auth token to be able to fetch data from Eventbrite's API. Follow [this guide](https://www.eventbrite.com/platform/api#/introduction/authentication) to get your key. The **Personal Tokens** section is the relevant bit.
 
 After going through the tutorial, you should have the following information:
 
 ```
 EVENTBRITE_AUTH_TOKEN=
+```
+
+### Postgres Database URL
+
+For this example app, we will be using a Postgresql database. We need to specify Postgre's database url in the config. Follow [this guide](https://aws.amazon.com/getting-started/tutorials/create-connect-postgresql-db) to get your database set up.
+
+After going through the tutorial, you should have the following information:
+
+```
+DATABASE_URL=
+```
+
+The format should be something like:
+
+```
+DATABASE_URL=postgresql://USER:PASSWORD@ENDPOINT/DATABASE_NAME
 ```
 
 ## Install dependencies

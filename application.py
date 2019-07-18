@@ -1,49 +1,12 @@
 from flask import Flask, render_template, jsonify, request, abort
 import config
 
-from sqlalchemy import create_engine
-from sqlalchemy import Column, String, BigInteger, ForeignKeyConstraint
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 from eventbrite import get_events
 
+from models import Favorite
+from db import get_session, database
+
 application = Flask(__name__)
-
-
-db_string = (
-    "postgresql://"
-    + config.DATABASE_USERNAME
-    + ":"
-    + config.DATABASE_PASSWORD
-    + "@"
-    + config.DATABASE_SERVER
-    + ":"
-    + config.DATABASE_PORT
-    + "/"
-    + config.DATABASE_NAME
-)
-db = create_engine(db_string)
-base = declarative_base()
-
-
-class Favorite(base):
-    __tablename__ = "favorites"
-
-    id = Column(BigInteger, primary_key=True)
-    user_id = Column(BigInteger, index=True)
-    event_id = Column(BigInteger, index=True)
-    ForeignKeyConstraint(
-        ["user_id", "event_id"], ["favorites.user_id", "favorites.event_id"]
-    )
-
-    def to_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-Session = sessionmaker(db)
-session = Session()
-
-base.metadata.create_all(db)
 
 
 # Renders UI
@@ -52,6 +15,7 @@ def home():
     return render_template("homepage.html", city=request.args.get("city", ""))
 
 
+# API Endpoints
 @application.route("/api/events/<city>")
 def events(city):
     events = get_events(city)
@@ -61,6 +25,7 @@ def events(city):
 @application.route("/api/events/<event_id>/favorites", methods=["POST"])
 def create_favorite_event(event_id):
     user_id = request.headers.get("x-user-id")
+    session = get_session()
 
     favorite = (
         session.query(Favorite).filter_by(event_id=event_id, user_id=user_id).first()
@@ -80,6 +45,7 @@ def create_favorite_event(event_id):
 @application.route("/api/events/<event_id>/favorites", methods=["DELETE"])
 def delete_favorite_event(event_id):
     user_id = request.headers.get("x-user-id")
+    session = get_session()
 
     favorite = (
         session.query(Favorite).filter_by(event_id=event_id, user_id=user_id).first()
@@ -96,6 +62,7 @@ def delete_favorite_event(event_id):
 
 @application.route("/api/events/<event_id>/favorites", methods=["GET"])
 def get_favorites_event(event_id):
+    session = get_session()
     favorites_query = session.query(Favorite).filter_by(event_id=event_id)
 
     return jsonify(
@@ -104,13 +71,6 @@ def get_favorites_event(event_id):
             "results": [x.to_dict() for x in favorites_query.all()],
         }
     )
-
-
-@application.teardown_request
-def teardown_request(exception):
-    if exception:
-        db.session.rollback()
-    db.session.remove()
 
 
 if __name__ == "__main__":
