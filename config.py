@@ -9,7 +9,7 @@ EVENTBRITE_AUTH_TOKEN = os.getenv("EVENTBRITE_AUTH_TOKEN")
 # Reads the database config injected by AWS Elastic Beanstalk
 if "RDS_DB_NAME" in os.environ:
     rds_db_string = (
-        "postgresql://"
+        "mysql://"
         + os.getenv("RDS_USERNAME")
         + ":"
         + os.getenv("RDS_PASSWORD")
