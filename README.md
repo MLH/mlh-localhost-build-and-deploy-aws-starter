@@ -2,7 +2,7 @@
 
 ## Requirements and dependencies
 
-- [Python3](https://www.python.org/) - We recommend using virtual environments. They will help on the creation of isolated environments so different python versions can run on the same machine. Check more about virtual environments [here](https://docs.python.org/3/library/venv.html). (Needs to be installed manually)
+- [Python3](https://www.python.org/) - We recommend using virtual environments. They will help on the creation of isolated environments so different python versions can run on the same machine. Check more about virtual environments [here](https://docs.python.org/3/library/venv.html). (Needs to be installed manually) or with pipenv (another popular Python virtual enviornment manager) [here](https://github.com/pypa/pipenv).
 - [Pip](https://pip.pypa.io/en/latest/installing/) - The python package manager. (Needs to be installed manually)
 - [Flask](http://flask.pocoo.org/) - A simple and flexible Python Web Framework that provides with tools, libraries and technologies to build a web application. (Installed by pip)
 
