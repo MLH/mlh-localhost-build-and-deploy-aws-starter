@@ -63,9 +63,13 @@ You may need to install the `mysql-connector-c` and add flags to allow Homebrew 
 
 ### Helpful Links
 [Mac OS X - EnvironmentError: mysql_config not found](https://stackoverflow.com/a/50972734)
+
 [ld: library not found for -lssl](https://stackoverflow.com/questions/16682156/ld-library-not-found-for-lgsl)
+
 [Repo for mysqlclient](https://pypi.org/project/mysqlclient/)
+
 [MySQL Configuration error](https://stackoverflow.com/questions/51578425/mysqlclient-instal-error-raise-exceptionwrong-mysql-configuration-maybe-htt)
+
 [Blog Post on pipenv mysql fix](https://medium.com/@shandou/pipenv-install-mysqlclient-on-macosx-7c253b0112f2)
 
 ## Executing the application
