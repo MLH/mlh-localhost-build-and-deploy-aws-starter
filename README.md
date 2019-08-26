@@ -3,7 +3,7 @@
 ## Requirements and dependencies
 
 - [Python3](https://www.python.org/) - We recommend using virtual environments. They will help on the creation of isolated environments so different python versions can run on the same machine. Check more about virtual environments [here](https://docs.python.org/3/library/venv.html). (Needs to be installed manually)
-- [Pip](https://pip.pypa.io/en/latest/installing/) - The python package manager. (Needs to be installed manually; will be installed if your Python version is [>=2.7.9 or >3.4](https://pip.pypa.io/en/stable/installing/))
+- [Pip](https://pip.pypa.io/en/latest/installing/) - The python package manager. (Needs to be installed manually; will be automatically installed on Mac if your Python version is [>=2.7.9 or >3.4](https://pip.pypa.io/en/stable/installing/))
 - [Flask](http://flask.pocoo.org/) - A simple and flexible Python Web Framework that provides with tools, libraries and technologies to build a web application. (Installed by pip)
 
 ## Clone the project
