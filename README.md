@@ -3,7 +3,7 @@
 ## Requirements and dependencies
 
 - [Python3](https://www.python.org/) - We recommend using virtual environments. They will help on the creation of isolated environments so different python versions can run on the same machine. Check more about virtual environments [here](https://docs.python.org/3/library/venv.html). (Needs to be installed manually)
-- [Pip](https://pip.pypa.io/en/latest/installing/) - The python package manager. (Needs to be installed manually)
+- [Pip](https://pip.pypa.io/en/latest/installing/) - The python package manager. (Needs to be installed manually; will be installed if your Python version is [>=2.7.9 or >3.4](https://pip.pypa.io/en/stable/installing/))
 - [Flask](http://flask.pocoo.org/) - A simple and flexible Python Web Framework that provides with tools, libraries and technologies to build a web application. (Installed by pip)
 
 ## Clone the project
@@ -30,7 +30,7 @@ EVENTBRITE_AUTH_TOKEN=
 
 ### Database URL
 
-This allows you to use a custom database url and will be useful for local tests (The app is currently configured to support a custom Postgres or Mysql database). This won't be necessary to deploy the app to AWS, as we will use an RDS instance that Elast Beanstalk configures for us. See the "Adding a database to Your Elastic Beanstalk Environment" section below for more details.
+This allows you to use a custom database url and will be useful for local tests (The app is currently configured to support a custom Postgres or Mysql database). This won't be necessary to deploy the app to AWS, as we will use an RDS instance that Elastic Beanstalk configures for us. See the "Adding a database to Your Elastic Beanstalk Environment" section below for more details.
 
 ```
 CUSTOM_DATABASE_URL=
@@ -50,6 +50,24 @@ The next step is to install the dependencies used by the project. Run the follow
 pip install -r requirements.txt
 ```
 
+## Troubleshooting `mysqlclient` Install (Mac)
+
+If you're running on a Mac, you may run into issues installing the MySQL client. There are a few things that need to be checked for:
+
+- Do you have mysql installed?
+You can check this by seeing if  `mysql` 
+- Do you have python3 installed?
+You can install Python3 with `brew install python3`
+
+You may need to install the `mysql-connector-c` and add flags to allow Homebrew to work with Open SSL; follow the answers in the links below.
+
+### Helpful Links
+[Mac OS X - EnvironmentError: mysql_config not found](https://stackoverflow.com/a/50972734)
+[ld: library not found for -lssl](https://stackoverflow.com/questions/16682156/ld-library-not-found-for-lgsl)
+[Repo for mysqlclient](https://pypi.org/project/mysqlclient/)
+[MySQL Configuration error](https://stackoverflow.com/questions/51578425/mysqlclient-instal-error-raise-exceptionwrong-mysql-configuration-maybe-htt)
+[Blog Post on pipenv mysql fix](https://medium.com/@shandou/pipenv-install-mysqlclient-on-macosx-7c253b0112f2)
+
 ## Executing the application
 
 After having all the dependencies installed, you only need to execute the main application file. In this case it will be the file "main.py"
@@ -62,7 +80,7 @@ Then open [http://localhost:5000/](http://localhost:5000/) to see the applicatio
 
 ## Deploying to AWS Elastic Beanstalk
 
-We will use [awswebcli](https://pypi.org/project/awsebcli/3.7.4/) to deployr our app to AWS.
+We will use [awswebcli](https://pypi.org/project/awsebcli/3.7.4/) to deploy our app to AWS.
 
 ### Install awswebcli
 
