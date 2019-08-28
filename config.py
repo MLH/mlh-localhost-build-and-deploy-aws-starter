@@ -25,4 +25,4 @@ if "RDS_DB_NAME" in os.environ:
     )
     DATABASE_URL = rds_db_string
 else:
-    DATABASE_URL = os.getenv("CUSTOM_DATABASE_URL")
+    DATABASE_URL = os.getenv("DATABASE_URL")
