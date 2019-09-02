@@ -2,7 +2,8 @@
 
 ## Requirements and dependencies
 
-- [Python3](https://www.python.org/) - We recommend using virtual environments. They will help on the creation of isolated environments so different python versions can run on the same machine. Check more about virtual environments [here](https://docs.python.org/3/library/venv.html). (Needs to be installed manually)
+- [Python3](https://www.python.org/)
+- [Pipenv](https://pypi.org/project/pipenv/) - virtual enviornment for downloading packages
 - [Pip](https://pip.pypa.io/en/latest/installing/) - The python package manager. (Needs to be installed manually; will be automatically installed on Mac if your Python version is [>=2.7.9 or >3.4](https://pip.pypa.io/en/stable/installing/))
 - [Flask](http://flask.pocoo.org/) - A simple and flexible Python Web Framework that provides with tools, libraries and technologies to build a web application. (Installed by pip)
 
@@ -44,10 +45,22 @@ CUSTOM_DATABASE_URL=mysql://USER:PASSWORD@ENDPOINT/DATABASE_NAME
 
 ## Install dependencies
 
+Install pipenv:
+
+Mac:
+```sh
+brew install pipenv
+```
+
+Windows:
+```sh
+pip install pipenv
+```
+
 The next step is to install the dependencies used by the project. Run the following command:
 
 ```sh
-pip install -r requirements.txt
+pipenv --three install -r requirements.txt
 ```
 
 ## Troubleshooting `mysqlclient` Install (Mac)
