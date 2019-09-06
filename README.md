@@ -70,7 +70,7 @@ pip install pipenv
 The next step is to install the dependencies used by the project. Run the following command:
 
 ```sh
-pipenv --three install -r requirements.txt
+pipenv install -r requirements.txt
 ```
 
 ## Troubleshooting `mysqlclient` Install (Mac)
