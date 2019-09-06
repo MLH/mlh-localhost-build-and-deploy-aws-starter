@@ -14,6 +14,16 @@ Use the command below:
 git clone https://github.com/MLH/mlh-localhost-build-and-deploy-aws.git
 ```
 
+## Setup Script (Optional)
+
+This workshop has a setup script called `setup.sh`.
+
+In order to be run it needs to be executable. You need to give it permission to run on your machine by using the command:
+
+```sh
+chmod +x setup.sh
+```
+
 ## Set Up Environment variables
 
 To quickly set up environment variables, make a copy of the `.env.example` and rename it to `.env`. Then make sure to modify it following the instructions below.
@@ -71,6 +81,8 @@ You may need to install the `mysql-connector-c` and add flags to allow Homebrew 
 [MySQL Configuration error](https://stackoverflow.com/questions/51578425/mysqlclient-instal-error-raise-exceptionwrong-mysql-configuration-maybe-htt)
 
 [Blog Post on pipenv mysql fix](https://medium.com/@shandou/pipenv-install-mysqlclient-on-macosx-7c253b0112f2)
+
+[pipenv not recognizing Python 3](https://github.com/pypa/pipenv/issues/3363)
 
 ## Executing the application
 
