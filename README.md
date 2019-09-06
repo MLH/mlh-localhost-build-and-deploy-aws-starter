@@ -102,12 +102,18 @@ We will use [awswebcli](https://pypi.org/project/awsebcli/3.7.4/) to deploy our 
 ### Install awswebcli
 
 ```sh
-pip install awsebcli
+pipenv install awsebcli
 ```
 
 ### Initialize your APP
 
 After installing `awswebcli`, the first thing we need to do is to initialize our app within AWS.
+
+Enter your virtual env with `pipenv shell`
+
+```sh
+pipenv shell
+```
 
 ```sh
 eb init
