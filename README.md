@@ -41,16 +41,22 @@ EVENTBRITE_AUTH_TOKEN=
 
 ### Database URL
 
-This allows you to use a custom database url and will be useful for local tests (The app is currently configured to support a custom Postgres or Mysql database). This won't be necessary to deploy the app to AWS, as we will use an RDS instance that Elastic Beanstalk configures for us. See the "Adding a database to Your Elastic Beanstalk Environment" section below for more details.
+This allows you to use a [custom database url](https://dev.mysql.com/doc/mysql-getting-started/en/) and will be useful for local tests (The app is currently configured to support a custom Postgres or Mysql database). This won't be necessary to deploy the app to AWS, as we will use an RDS instance that Elastic Beanstalk configures for us. See the "Adding a database to Your Elastic Beanstalk Environment" section below for more details.
 
 ```
-CUSTOM_DATABASE_URL=
+DATABASE_URL=
 ```
 
 The format should be something like:
 
 ```
-CUSTOM_DATABASE_URL=mysql://USER:PASSWORD@ENDPOINT/DATABASE_NAME
+DATABASE_URL=mysql://USER:PASSWORD@ENDPOINT/DATABASE_NAME
+```
+
+For a local development server, the url could look something like:
+
+```
+DATABASE_URL=mysql://littlejohnnydroptables:amaz1ngpa33word@localhost/events
 ```
 
 ## Install dependencies
@@ -121,11 +127,13 @@ pipenv install awsebcli
 
 After installing `awswebcli`, the first thing we need to do is to initialize our app within AWS.
 
-Enter your virtual env with `pipenv shell`
+Enter your virtual env with:
 
 ```sh
 pipenv shell
 ```
+
+Initialize your Elastic Beanstalk with:
 
 ```sh
 eb init
