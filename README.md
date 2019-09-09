@@ -25,6 +25,12 @@ In order to be run it needs to be executable. You need to give it permission to 
 chmod +x setup.sh
 ```
 
+It can then be run with the command: 
+
+```sh
+./setup.sh
+```
+
 ## Set Up Environment variables
 
 To quickly set up environment variables, make a copy of the `.env.example` and rename it to `.env`. Then make sure to modify it following the instructions below.
