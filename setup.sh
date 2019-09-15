@@ -46,11 +46,6 @@ fi
 
 echo "--- pipenv agrees with pwd directory! ---"
 
-string='My long string'
-if [[ $string == *"My long"* ]]; then
-  echo "It's there!"
-fi
-
 # check for running enviornments
 echo "--- Checking for existing virtual enviornments ---"
 PIPVENV=`pipenv --venv`
