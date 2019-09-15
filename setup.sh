@@ -1,4 +1,3 @@
-set -x
 #!/bin/bash
 # setup script for aws env
 
@@ -7,7 +6,7 @@ set -x
 echo "--- Checking for Python3 installation ---"
 
 if ! [ -x "$(command -v python3)" ]; then
-  echo 'Error: python3 is not installed. You can install Python3 at https://www.python.org/downloads/' >&2
+  echo 'Error: python3 is not installed. You can install Python3 at https://www.python.org/downloads/'
   exit 1
 fi
 
@@ -17,7 +16,7 @@ echo "--- Python3 successfully found! ---"
 echo "--- Checking for pip installation ---"
 
 if ! [ -x "$(command -v pip)" ]; then
-  echo 'Error: pip is not installed. You can install pip at https://pip.pypa.io/en/stable/installing/' >&2
+  echo 'Error: pip is not installed. You can install pip at https://pip.pypa.io/en/stable/installing/'
   exit 1
 fi
 
@@ -47,10 +46,15 @@ fi
 
 echo "--- pipenv agrees with pwd directory! ---"
 
+string='My long string'
+if [[ $string == *"My long"* ]]; then
+  echo "It's there!"
+fi
 
 # check for running enviornments
 echo "--- Checking for existing virtual enviornments ---"
-if [ `pipenv --venv` == 'No virtualenv has been created for this project yet!' ]; then
+PIPVENV=`pipenv --venv`
+if [[ $PIPVENV != *"No virtualenv has been created for this project yet!"* ]]; then
     echo '--- Found existing virtual env! ---'
     echo "--- Checking env for dependencies. This may take a while... ---"
     FLAG=0
@@ -77,7 +81,7 @@ if [ `pipenv --venv` == 'No virtualenv has been created for this project yet!' ]
 
     if [ $FLAG == 1 ]; then 
         echo '--- running pip install ---'
-        command `pipenv install -r requirements.txt`
+        eval `pipenv install -r requirements.txt`
         echo '--- pip install successfully run! Exiting. ---'
         exit 1
     fi
@@ -88,8 +92,14 @@ if [ `pipenv --venv` == 'No virtualenv has been created for this project yet!' ]
 fi
 
 echo '--- No virtual env found! Installing dependencies now ---'
-command `pipenv install -r requirements.txt`
+INSTALL_RESULT=eval `pipenv install -r requirements.txt`
+
+if [[ $INSTALL_RESULT == *"Traceback"* ]]; then
+    echo 'Unsuccessful install. Aborting! Ask for help from organizer.'
+    exit 1
+fi
+
 echo '--- pip install successfully run! Exiting. ---'
-exit 1
+exit 0
 
 

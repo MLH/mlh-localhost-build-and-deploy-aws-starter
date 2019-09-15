@@ -11,14 +11,15 @@ application = Flask(__name__)
 # Renders UI
 @application.route("/")
 def home():
+    # renders an html page with url parameters, if any
     return render_template("homepage.html", city=request.args.get("city", ""))
 
 
 # API Endpoints
-@application.route("/api/events/<city>")
-def events(city):
-    events = get_events(city)
-    return jsonify(events)
+@application.route("/api/events/<city>") # annotation for route
+def events(city): # function name
+    events = get_events(city) # getting list of events from eventbrite 
+    return jsonify(events) # json rendered array
 
 
 @application.route("/api/events/<event_id>/favorites", methods=["POST"])
