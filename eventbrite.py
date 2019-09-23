@@ -7,11 +7,11 @@ import json # 💡json stands for Javascript Object Notation and is commonly use
 # 🆘 Help us fix this file!! 🆘
 ###
 
-# 1. 🆘✨ we want to get events for the city name a user types in. Add city 🏙 as a parameter!
+# 1. 🆘✨ we want to get events for the city name a user types in. Replace the placeholder variable with city 🏙 as a parameter!
 def get_events( FIX_ME ):
 
     # 2. 🆘✨ use the dotenv file to find the correct variable for Eventbrite!
-    # We need to use our key!
+    # We need to use our key! Look in the .env file for the Eventbrite key name
     headers = { "Authorization": "Bearer " + config.FIX_ME }
 
     # 💡the Request() method calls an external URL from our Python server
