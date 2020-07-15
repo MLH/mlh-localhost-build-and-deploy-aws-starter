@@ -35,14 +35,12 @@ It can then be run with the command:
 
 To quickly set up environment variables, make a copy of the `.env.example` and rename it to `.env`. Then make sure to modify it following the instructions below.
 
-### EventBrite API Key
+### Yelp API Key
 
-We need to setup an Eventbrite Auth token to be able to fetch data from Eventbrite's API. Follow [this guide](https://www.eventbrite.com/platform/api#/introduction/authentication) to get your key. The **Personal Tokens** section is the relevant bit.
-
-After going through the tutorial, you should have the following information:
+# TODO: document getting YELP
 
 ```
-EVENTBRITE_AUTH_TOKEN=
+YELP_AUTH_TOKEN=
 ```
 
 ### Database URL
@@ -203,12 +201,12 @@ Name your environment. `localhost-aws-test` for instance.
 
 This will be your subdomain. You can keep the default value, or use your environment name.
 
-### Configuring Eventbrite Auth Token
+### Configuring YELP Auth Token
 
 Open your console management by running
 
 ```sh
-eb setenv EVENTBRITE_AUTH_TOKEN={{EVENTBRITE_AUTH_TOKEN_VALUE}}
+eb setenv YELP_AUTH_TOKEN={{YELP_AUTH_TOKEN_VALUE}}
 ```
 
 ### (Optional) Set up a different DB engine

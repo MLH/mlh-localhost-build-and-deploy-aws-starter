@@ -1,9 +1,9 @@
 from flask import Flask, render_template, jsonify, request, abort
 import config
 
-from eventbrite import get_events
+from yelp import get_events
 
-from db import Favorite, get_session, database
+from db import Favorite, get_session
 
 application = Flask(__name__)
 
@@ -19,7 +19,7 @@ def home():
 # API Endpoints
 @application.route("/api/events/<city>") # annotation for route
 def events(city): # function name
-    events = get_events(city) # getting list of events from eventbrite 
+    events = get_events(city) # getting list of events from Yelp
     return jsonify(events) # json rendered array
 
 

@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 FLASK_APP_SECRET_KEY = os.getenv("FLASK_APP_SECRET_KEY")
-EVENTBRITE_AUTH_TOKEN = os.getenv("EVENTBRITE_AUTH_TOKEN")
+YELP_AUTH_TOKEN = os.getenv("YELP_AUTH_TOKEN")
 
 # Reads the database config injected by AWS Elastic Beanstalk
 if "RDS_DB_NAME" in os.environ:
