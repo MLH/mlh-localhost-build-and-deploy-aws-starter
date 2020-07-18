@@ -26,7 +26,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/static/style.css" />
-    <title>MLH - Event Suggestion Generator</title>
+    <title>MLH - Seafood Suggestion Generator</title>
   </head>
   <body>
     <nav class="navbar navbar-default topbar-bot">
@@ -35,7 +35,7 @@
           <a class="navbar-brand" href="/">
             <img alt="mlh-logo" src="/static/logo.svg" />
           </a>
-          <p class="navbar-text">Event Suggestion Generator!</p>
+          <p class="navbar-text">Seafood Suggestion Generator!</p>
         </div>
       </div>
     </nav>
@@ -64,7 +64,7 @@
                     id="submit"
                     disabled
                   >
-                    Find events
+                    Find seafood
                   </button>
                 </div>
               </div>
@@ -73,22 +73,22 @@
         </div>
       </div>
 
-      <div class="card-columns" id="events"></div>
+      <div class="card-columns" id="places"></div>
     </div>
 
     <!-- Modal -->
     <div
       class="modal fade"
-      id="eventPreview"
+      id="placePreview"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="eventPreviewTitle"
+      aria-labelledby="placePreviewTitle"
       aria-hidden="true"
     >
       <div id="modal" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="eventPreviewTitle">Modal title</h5>
+            <h5 class="modal-title" id="placePreviewTitle">Modal title</h5>
             <button
               type="button"
               class="close"
@@ -118,7 +118,7 @@
                 <span id="subscribedCount">0</span>
               </span>
             </button>
-            <a class="btn btn-primary" target="_blank" href="/" id="eventUrl"
+            <a class="btn btn-primary" target="_blank" href="/" id="placeUrl"
               >Go to Yelp</a
             >
           </div>
