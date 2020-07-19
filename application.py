@@ -3,7 +3,7 @@ import config
 
 from yelp import get_businesses
 
-# from db import Favorite, get_session
+from db import Favorite, get_session
 
 application = Flask(__name__)
 
@@ -20,9 +20,11 @@ def home():
 @application.route("/api/places/<city>") # annotation for route
 def places(city):
     businesses = get_businesses(city) # getting list of businesses from Yelp
-    print(businesses)
     return jsonify(businesses) # json rendered array
 
+# ================================================================================
+# Code skeleton for favorites. Not covered in this workshop, but a fun next step!
+# ================================================================================
 
 @application.route("/api/places/<place_id>/favorites", methods=["POST"])
 def create_favorite_event(place_id):
