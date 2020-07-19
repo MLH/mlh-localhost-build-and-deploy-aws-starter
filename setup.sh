@@ -87,7 +87,7 @@ if [[ $PIPVENV != *"No virtualenv has been created for this project yet!"* ]]; t
 fi
 
 echo '--- No virtual env found! Installing dependencies now ---'
-INSTALL_RESULT=eval `pipenv install -r aws-requirements.txt`
+INSTALL_RESULT=eval `pipenv install -r requirements.txt`
 
 if [[ $INSTALL_RESULT == *"Traceback"* ]]; then
     echo 'Unsuccessful install. Aborting! Ask for help from organizer.'
