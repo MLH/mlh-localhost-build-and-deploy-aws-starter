@@ -13,7 +13,7 @@ application = Flask(__name__)
 def home():
     # 💡 renders an html page with url parameters, if any
     # 🆘 1. We need to show the correct homepage! Change start.html to homepage.html
-    return render_template("homepage.html", city=request.args.get("city", ""))
+    return render_template("start.html", city=request.args.get("city", ""))
 
 
 # API Endpoints
