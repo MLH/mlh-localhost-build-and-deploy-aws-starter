@@ -3,7 +3,7 @@ import config
 
 from yelp import get_businesses
 
-from db import Favorite, get_session
+# from db import Favorite, get_session
 
 application = Flask(__name__)
 
