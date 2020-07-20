@@ -3,9 +3,13 @@
 ## Requirements and dependencies
 
 - [Python3](https://www.python.org/)
-- [Pipenv](https://pypi.org/project/pipenv/) - virtual enviornment for downloading packages
-- [Pip](https://pip.pypa.io/en/latest/installing/) - The python package manager. (Needs to be installed manually; will be automatically installed on Mac if your Python version is [>=2.7.9 or >3.4](https://pip.pypa.io/en/stable/installing/))
+- [Pip](https://pip.pypa.io/en/latest/installing/) - The python package manager.
 - [Flask](http://flask.pocoo.org/) - A simple and flexible Python Web Framework that provides with tools, libraries and technologies to build a web application. (Installed by pip)
+
+## Database requirements
+
+- Locally, install [MariaDB](https://mariadb.org/download/).
+- On AWS, MySQL is used and the `mysqlclient` connector is used.
 
 ## Clone the project
 
@@ -15,34 +19,18 @@ Use the command below:
 git clone https://github.com/MLH/mlh-localhost-build-and-deploy-aws.git
 ```
 
-## Setup Script (Optional)
-
-This workshop has a setup script called `setup.sh`.
-
-In order to be run it needs to be executable. You need to give it permission to run on your machine by using the command:
-
-```sh
-chmod +x setup.sh
-```
-
-It can then be run with the command: 
-
-```sh
-./setup.sh
-```
-
 ## Set Up Environment variables
 
 To quickly set up environment variables, make a copy of the `.env.example` and rename it to `.env`. Then make sure to modify it following the instructions below.
 
-### EventBrite API Key
+### Yelp API Key
 
-We need to setup an Eventbrite Auth token to be able to fetch data from Eventbrite's API. Follow [this guide](https://www.eventbrite.com/platform/api#/introduction/authentication) to get your key. The **Personal Tokens** section is the relevant bit.
-
-After going through the tutorial, you should have the following information:
+1. Create a Yelp account
+2. Create an app at https://www.yelp.ca/developers/v3/manage_app
+3. Copy the API key to the `.env`
 
 ```
-EVENTBRITE_AUTH_TOKEN=
+YELP_AUTH_TOKEN=
 ```
 
 ### Database URL
@@ -67,47 +55,11 @@ DATABASE_URL=mysql://littlejohnnydroptables:amaz1ngpa33word@localhost/events
 
 ## Install dependencies
 
-Install pipenv:
-
-Mac:
-```sh
-brew install pipenv
-```
-
-Windows:
-```sh
-pip install pipenv
-```
-
 The next step is to install the dependencies used by the project. Run the following command:
 
 ```sh
-pipenv install -r requirements.txt
+pip install -r requirements.txt
 ```
-
-## Troubleshooting `mysqlclient` Install (Mac)
-
-If you're running on a Mac, you may run into issues installing the MySQL client. There are a few things that need to be checked for:
-
-- Do you have mysql installed?
-You can check this by seeing if  `mysql` 
-- Do you have python3 installed?
-You can install Python3 with `brew install python3`
-
-You may need to install the `mysql-connector-c` and add flags to allow Homebrew to work with Open SSL; follow the answers in the links below.
-
-### Helpful Links
-[Mac OS X - EnvironmentError: mysql_config not found](https://stackoverflow.com/a/50972734)
-
-[ld: library not found for -lssl](https://stackoverflow.com/questions/16682156/ld-library-not-found-for-lgsl)
-
-[Repo for mysqlclient](https://pypi.org/project/mysqlclient/)
-
-[MySQL Configuration error](https://stackoverflow.com/questions/51578425/mysqlclient-instal-error-raise-exceptionwrong-mysql-configuration-maybe-htt)
-
-[Blog Post on pipenv mysql fix](https://medium.com/@shandou/pipenv-install-mysqlclient-on-macosx-7c253b0112f2)
-
-[pipenv not recognizing Python 3](https://github.com/pypa/pipenv/issues/3363)
 
 ## Executing the application
 
@@ -126,18 +78,12 @@ We will use [awswebcli](https://pypi.org/project/awsebcli/3.7.4/) to deploy our 
 ### Install awswebcli
 
 ```sh
-pipenv install awsebcli
+pip install awsebcli
 ```
 
 ### Initialize your APP
 
 After installing `awswebcli`, the first thing we need to do is to initialize our app within AWS.
-
-Enter your virtual env with:
-
-```sh
-pipenv shell
-```
 
 Initialize your Elastic Beanstalk with:
 
@@ -203,18 +149,17 @@ Name your environment. `localhost-aws-test` for instance.
 
 This will be your subdomain. You can keep the default value, or use your environment name.
 
-### Configuring Eventbrite Auth Token
+### Configuring YELP Auth Token
 
 Open your console management by running
 
 ```sh
-eb setenv EVENTBRITE_AUTH_TOKEN={{EVENTBRITE_AUTH_TOKEN_VALUE}}
+eb setenv YELP_AUTH_TOKEN={{YELP_AUTH_TOKEN_VALUE}}
 ```
 
-### (Optional) Set up a different DB engine
+### Set up a different DB engine
 
 ```sh
-eb setenv RDS_ENGINE=postgresql
 eb setenv RDS_ENGINE=mysql
 ```
 

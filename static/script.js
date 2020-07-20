@@ -83,19 +83,19 @@
 
   // Abstracts communication with the API
   // Allows us to search for events and manage favorites
-  const EventsApi = {
-    findEvents: async city =>
-      new ApiCircuitBreaker().call(`/api/events/${city}`),
+  const PlacesApi = {
+    findPlaces: async city =>
+      new ApiCircuitBreaker().call(`/api/places/${city}`),
     createFavorite: async id =>
-      new ApiCircuitBreaker().call(`/api/events/${id}/favorites`, {
+      new ApiCircuitBreaker().call(`/api/places/${id}/favorites`, {
         method: "POST"
       }),
     deleteFavorite: async id =>
-      new ApiCircuitBreaker().call(`/api/events/${id}/favorites`, {
+      new ApiCircuitBreaker().call(`/api/places/${id}/favorites`, {
         method: "DELETE"
       }),
-    getEventFavorites: async id =>
-      new ApiCircuitBreaker().call(`/api/events/${id}/favorites`)
+    getPlaceFavorites: async id =>
+      new ApiCircuitBreaker().call(`/api/places/${id}/favorites`)
   };
 
   // Abstracts UI changes
@@ -110,10 +110,10 @@
     },
     getCityUrlParameter: () => UI.getUrlParameter("city"),
     getCityField: () => $("#city"),
-    getEventsList: () => $("#events"),
+    getPlacesList: () => $("#places"),
     getSubmitButton: () => $("#submit"),
-    getEventPreview: () => $("#eventPreview"),
-    disableSubmit: (text = "Find events") => {
+    getPlacePreview: () => $("#placePreview"),
+    disableSubmit: (text = "Find places") => {
       let submitButton = UI.getSubmitButton();
       submitButton.attr("disabled", true);
       submitButton.text(text);
@@ -121,7 +121,7 @@
     enableSubmit: () => {
       let submitButton = UI.getSubmitButton();
       submitButton.attr("disabled", false);
-      submitButton.text("Find events");
+      submitButton.text("Find seafood");
     },
     getForm: () => $("form"),
     getLoadingHtml: (includeText = true) =>
@@ -137,29 +137,29 @@
 
       return $.trim(city);
     },
-    buildEventHtml: event =>
+    buildPlaceHtml: place =>
       $(
         `
     <div class="card" style="width: 18rem;">
       <img
-        src="${event.logo ? event.logo.url : "/static/no-image-icon.png"}"
-        class="card-img-top ${event.logo ? "" : "placeholder"}"
-        alt="${event.name.text}"
+        src="${place.image_url}"
+        class="card-img-top"
+        alt="${place.name}"
       />
 
       <div class="card-body">
-        <h5 class="card-title">${event.name.text}</h5>
+        <h5 class="card-title">${place.name}</h5>
       </div>
       <div class="card-footer">
           <a
           href="#"
           class="btn btn-primary"
           data-toggle="modal"
-          data-target="#eventPreview"
-          data-title="${escape(event.name.html)}"
-          data-description="${escape(event.description.html)}"
-          data-url="${escape(event.url)}"
-          data-id="${event.id}"
+          data-target="#placePreview"
+          data-title="${escape(place.name)}"
+          data-description="${escape(place.phone)}"
+          data-url="${escape(place.url)}"
+          data-id="${place.id}"
         >
           More details
         </a>
@@ -167,8 +167,8 @@
     </div>`
       ),
     getModal: () => $("#modal"),
-    updateModalActions: async (eventFavorites, id, block = false) => {
-      const hasFavorited = eventFavorites.results.find(
+    updateModalActions: async (placeFavorites, id, block = false) => {
+      const hasFavorited = placeFavorites.results.find(
         event => event.user_id.toString() === UserApi.getUserId()
       );
 
@@ -193,7 +193,7 @@
       favoriteActionButton
         .find("#subscribedCount")
         .text(
-          ` (${eventFavorites.count}) ` +
+          ` (${placeFavorites.count}) ` +
             `${hasFavorited ? "Remove from " : "Add to "} favorites`
         );
       favoriteActionButton;
@@ -205,39 +205,39 @@
         .on("click", async () => {
           if (hasFavorited) {
             // Optimistic update
-            const newEventFavorites = {
-              count: eventFavorites.count - 1,
-              results: eventFavorites.results.filter(
-                eventFavorite => eventFavorite.event_id.toString() !== id
+            const newPlaceFavorites = {
+              count: placeFavorites.count - 1,
+              results: placeFavorites.results.filter(
+                placeFavorite => placeFavorite.event_id.toString() !== id
               )
             };
-            UI.updateModalActions(newEventFavorites, id, true);
+            UI.updateModalActions(newPlaceFavorites, id, true);
 
-            await EventsApi.deleteFavorite(id);
-            UI.updateModalActions(newEventFavorites, id);
+            await PlacesApi.deleteFavorite(id);
+            UI.updateModalActions(newPlaceFavorites, id);
           } else {
             // Optimistic update
-            const newOptimisticEventFavorites = {
-              count: eventFavorites.count + 1,
+            const newOptimisticPlaceFavorites = {
+              count: placeFavorites.count + 1,
               results: [
-                ...eventFavorites.results,
+                ...placeFavorites.results,
                 { event_id: id, user_id: UserApi.getUserId() }
               ]
             };
-            UI.updateModalActions(newOptimisticEventFavorites, id, true);
+            UI.updateModalActions(newOptimisticPlaceFavorites, id, true);
 
-            const eventFavorite = await EventsApi.createFavorite(id);
-            const newEventFavorites = {
-              count: eventFavorites.count + 1,
-              results: [...eventFavorites.results, { ...eventFavorite }]
+            const placeFavorite = await PlacesApi.createFavorite(id);
+            const newPlacesFavorites = {
+              count: placeFavorites.count + 1,
+              results: [...placeFavorites.results, { ...placeFavorite }]
             };
-            UI.updateModalActions(newEventFavorites, id);
+            UI.updateModalActions(newPlacesFavorites, id);
           }
         });
     },
 
     bindModalAction: () => {
-      UI.getEventPreview()
+      UI.getPlacePreview()
         .unbind()
         .on("show.bs.modal", async domEvent => {
           const button = $(domEvent.relatedTarget); // Button that triggered the modal
@@ -251,27 +251,27 @@
           modal.find(".modal-footer").hide();
           modal.find(".modal-footer #eventUrl").prop("href", url);
 
-          const eventFavorites = await EventsApi.getEventFavorites(id);
-          const hasFavorited = eventFavorites.results.find(
+          const placeFavorites = await PlacesApi.getPlaceFavorites(id);
+          const hasFavorited = placeFavorites.results.find(
             event => event.user_id.toString() === UserApi.getUserId()
           );
 
-          UI.updateModalActions(eventFavorites, id);
+          UI.updateModalActions(placeFavorites, id);
         });
     },
-    displayEvents: events => {
-      events.forEach(suggestion => {
-        UI.getEventsList().append(UI.buildEventHtml(suggestion));
+    displayPlaces: places => {
+      places.forEach(suggestion => {
+        UI.getPlacesList().append(UI.buildPlaceHtml(suggestion));
       });
     },
-    fetchEventsAndDisplay: async city => {
+    fetchPlacesAndDisplay: async city => {
       UI.disableSubmit();
       UI.toggleLoading();
-      UI.getEventsList().html("");
+      UI.getPlacesList().html("");
 
-      const events = await EventsApi.findEvents(city);
+      const places = await PlacesApi.findPlaces(city);
       UI.enableSubmit();
-      UI.displayEvents(events);
+      UI.displayPlaces(places);
     },
     bindFormActions: () => {
       const validate = e => {
@@ -297,7 +297,7 @@
           const city = $.trim(UI.getCityField().val());
 
           history.pushState({}, "", `/?city=${city}`);
-          UI.fetchEventsAndDisplay(city);
+          UI.fetchPlacesAndDisplay(city);
         });
     },
     init: () => {
@@ -309,7 +309,7 @@
 
       if (city) {
         UI.getCityField().val(city);
-        UI.fetchEventsAndDisplay(city);
+        UI.fetchPlacesAndDisplay(city);
       }
     }
   };
