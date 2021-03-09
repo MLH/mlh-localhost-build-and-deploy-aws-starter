@@ -11,7 +11,7 @@ def get_businesses( FIXME ):
 
     # 2. 🆘✨ use the dotenv file to find the correct variable for Yelp!
     # We need to use our key! Look in the .env file for the Yelp key name
-    headers = { "Authorization": f"Bearer {config.YELP_AUTH_TOKEN}" }
+    headers = { "Authorization": "Bearer " + config.FIXME}
     params = {"location": city, "limit": 5, "term": "seafood"}
 
     # 💡the Request() method calls an external URL from our Python server
@@ -22,6 +22,6 @@ def get_businesses( FIXME ):
     )
 
     # 3. 🆘✨we want to get a JSON response from Yelp. 
-    # They keep the info we need in the response_body.events.
-    # 💡returns a JSON array of events in a city
+    # They keep the info we need in the response_body.businesses.
+    # 💡returns a JSON array of businesses in a city
     return json.loads(request.text)["FIXME"]
